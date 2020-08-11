@@ -182,8 +182,8 @@ if __name__ == "__main__":
 
     candidates = jsonhandler.candidates
     unknowns = jsonhandler.unknowns
-    jsonhandler.loadJson(corpus_dir)
-    jsonhandler.loadTraining()
+    jsonhandler.load_json(corpus_dir)
+    jsonhandler.load_training()
 
     texts = {}
     # texts = frozenset() would this work??
@@ -193,9 +193,9 @@ if __name__ == "__main__":
     for can in candidates:
         texts[can] = ""
         for file in jsonhandler.trainings[can]:
-            texts[can] += jsonhandler.getTrainingText(can, file)
+            texts[can] += jsonhandler.get_training_text(can, file)
             # if frozenset() is used:
-            # texts.add(jsonhandler.getTrainingText(can, file))
+            # texts.add(jsonhandler.get_training_text(can, file))
             print("text " + file + " read")
         if len(texts[can].split()) < min_train_len:
             del texts[can]
@@ -218,7 +218,7 @@ if __name__ == "__main__":
 
     for file in unknowns:
         print("testing " + file)
-        u_text = jsonhandler.getUnknownText(file)
+        u_text = jsonhandler.get_unknown_text(file)
         u_len = len(u_text.split())
         if u_len < min_len:
             authors.append("None")
@@ -244,4 +244,4 @@ if __name__ == "__main__":
                 scores.append(score)
 
     print("storing answers")
-    jsonhandler.storeJson(output_dir, unknowns, authors, scores)
+    jsonhandler.store_json(output_dir, unknowns, authors, scores)
