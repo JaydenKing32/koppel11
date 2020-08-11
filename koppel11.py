@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Jakob Koehler & Tolga Buz
 Reproduction of Koppel11
@@ -15,8 +17,6 @@ n = 4
 featureLength = 20000
 # Score threshold (needed for open set)
 threshold = 0
-# number of k repetitions
-repetitions = 100
 # minimum size of document
 # (increases precision, but deteriorates recall,
 # if there are many small documents)
@@ -169,18 +169,16 @@ def get_random_string(s, length):
 
 
 if __name__ == "__main__":
-    #
     parser = argparse.ArgumentParser(
         description="Tira submission for PPM approach (koppel11)")
-    parser.add_argument("-i", action="store", help="path to corpus directory")
-    parser.add_argument("-o", action="store", help="path to output directory")
-    args = vars(parser.parse_args())
+    parser.add_argument("corpus", help="path to corpus directory")
+    parser.add_argument("-o", "--output", default="out", help="path to output directory")
+    parser.add_argument("-r", "--repetitions", default=100, type=int, help="number of k repetitions")
+    args = parser.parse_args()
 
-    corpus_dir = args["i"]
-    output_dir = args["o"]
-    if corpus_dir is None or output_dir is None:
-        parser.print_help()
-        exit()
+    corpus_dir = args.corpus
+    output_dir = args.output
+    repetitions = args.repetitions
 
     candidates = jsonhandler.candidates
     unknowns = jsonhandler.unknowns
